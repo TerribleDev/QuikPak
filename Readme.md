@@ -1,5 +1,11 @@
 QuikPak is a CLI tool that will take a directory and create an msi that will install a website into IIS with said directory...
 
+## How to install
+
+Install via chocolatey
+
+`choco install quikpak`
+
 ## How to use
 
 Create a json config file that looks something like this
