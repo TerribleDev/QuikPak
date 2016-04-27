@@ -31,7 +31,7 @@ namespace QuikPak
 				{
 				var attr = new Attributes()
 								{
-									{ "Port", Endpoint.Port },
+									{ "Port", Endpoint.Port.ToString() },
 									{ "Secure", Endpoint.Secure? "yes": "no" }
 								};
 				if(!string.IsNullOrWhiteSpace(Endpoint.DnsName))
@@ -39,7 +39,8 @@ namespace QuikPak
 					attr["Header"] = Endpoint.DnsName;
                 }
                     addresses.Add(new WebSite.WebAddress() {
-						
+						 Attributes = attr
+
 					});
 				}
 
@@ -74,14 +75,14 @@ namespace QuikPak
 			};
 			project.Properties.Add(new Property("REINSTALLMODE", "dmus"));
 			project.MajorUpgrade = new MajorUpgrade() { AllowDowngrades = true};
-			project.MajorUpgradeStrategy = new MajorUpgradeStrategy() {
+			//project.MajorUpgradeStrategy = new MajorUpgradeStrategy() {
 
-				UpgradeVersions = new VersionRange() {
-					IncludeMinimum = true,
-					IncludeMaximum = false,
-					Minimum = "0.0.0.1",
-					Maximum = "99.0.0.0"
-				} };
+			//	UpgradeVersions = new VersionRange() {
+			//		IncludeMinimum = true,
+			//		IncludeMaximum = false,
+			//		Minimum = "0.0.0.1",
+			//		Maximum = "99.0.0.0"
+			//	} };
 			Compiler.BuildMsi(project);
 		}
 	}

@@ -17,7 +17,7 @@ namespace QuikPak
 
 	public class Endpoint
 	{
-		public string Port { get; set; }
+		public int Port { get; set; }
 		public string DnsName { get; set; }
 		public bool Secure { get; set; } = false;
 	}
