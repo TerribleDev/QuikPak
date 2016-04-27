@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Do not remove this test for UTF-8: if “Ω” doesn’t appear as greek uppercase omega letter enclosed in quotation marks, you should use an editor that supports UTF-8, not this one. -->
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <!-- Read this before publishing packages to chocolatey.org: https://github.com/chocolatey/chocolatey/wiki/CreatePackages -->
+    <id>quikpak</id>
+    <title>QuikPak (Install)</title>
+    <version>0.2.0</version>
+    <authors>Tommy Parnell</authors>
+    <owners>Tommy Parnell</owners>
+    <summary>quickly pack directory's as IIS websites</summary>
+    <description>quickly pack directory's as IIS websites
+    </description>
+    <projectUrl>https://github.com/tparnell8/QuikPak</projectUrl>
+    <packageSourceUrl>https://github.com/tparnell8/QuikPak</packageSourceUrl>
+    <!--<projectSourceUrl></projectSourceUrl>
+    <docsUrl></docsUrl>
+    <mailingListUrl></mailingListUrl>
+    <bugTrackerUrl></bugTrackerUrl>-->
+    <tags>MSI creation IIS</tags>
+    <copyright></copyright>
+    <licenseUrl>https://github.com/tparnell8/QuikPak</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <dependencies>
+      <dependency id="wixtoolset" />
+    </dependencies>
+    <!--<provides></provides>-->
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+	<file src="..\bin\Release\**" target="" />
+  </files>
+</package>
