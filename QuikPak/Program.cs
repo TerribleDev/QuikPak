@@ -29,13 +29,17 @@ namespace QuikPak
 			
 				foreach(var Endpoint in config.Endpoints)
 				{
-					addresses.Add(new WebSite.WebAddress() {
-						Attributes = new Attributes()
+				var attr = new Attributes()
 								{
 									{ "Port", Endpoint.Port },
-									{"Header", Endpoint.DnsName },
 									{ "Secure", Endpoint.Secure? "yes": "no" }
-								}
+								};
+				if(!string.IsNullOrWhiteSpace(Endpoint.DnsName))
+				{
+					attr["Header"] = Endpoint.DnsName;
+                }
+                    addresses.Add(new WebSite.WebAddress() {
+						
 					});
 				}
 

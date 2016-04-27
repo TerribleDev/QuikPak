@@ -6,7 +6,7 @@
     "Endpoints": [
         {
             "port": 80,
-            "DnsName": "mywebsite.com",
+            "DnsName": "",
             "Secure": false
         }
     ]
