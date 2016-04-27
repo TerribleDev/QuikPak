@@ -19,7 +19,7 @@
     <bugTrackerUrl></bugTrackerUrl>-->
     <tags>MSI creation IIS</tags>
     <copyright></copyright>
-    <licenseUrl>https://github.com/tparnell8/QuikPak</licenseUrl>
+    <licenseUrl>https://github.com/tparnell8/QuikPak/blob/master/LICENSE.md</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <dependencies>
       <dependency id="wixtoolset" />
