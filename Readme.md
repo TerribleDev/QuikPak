@@ -6,6 +6,8 @@ Install via chocolatey
 
 `choco install quikpak`
 
+You can also install it from our public feed which might have newer versions faster: `choco install quikpak -s https://www.myget.org/F/tommy-chocolatey/api/v2`
+
 ## How to use
 
 Create a json config file that looks something like this
