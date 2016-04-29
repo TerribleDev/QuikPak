@@ -14,7 +14,6 @@ Create a json config file that looks something like this
 ```json
 
 {
-    "Id": "d372b142-ea42-4cc9-8dd6-cb4ba2b0c0f3",
     "UpgradeCode": "317e4313-2314-46e9-ae7e-6cdfee60c05d",
     "Name": "MyWebsite",
     "Version": "1.0.0.0",
@@ -30,3 +29,7 @@ Create a json config file that looks something like this
 ```
 
 then call QuikPak.exe -c path\to\your\config.json -x path\to\your\web\content
+
+## TODO
+
+Allow someone to include a certificate optionally for secure bindings

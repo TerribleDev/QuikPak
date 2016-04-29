@@ -9,7 +9,7 @@ using WixSharp;
 
 namespace QuikPak
 {
-    class Program
+    internal class Program
     {
         public static void Main(string[] args)
         {
@@ -65,21 +65,25 @@ namespace QuikPak
                 )
             },
                 Version = new Version(config.Version) { },
-                GUID = new Guid(config.Id),
+                GUID = string.IsNullOrWhiteSpace(config.Id) ? Guid.NewGuid() : new Guid(config.Id),
                 UI = WUI.WixUI_ProgressOnly,
                 OutFileName = config.Name,
                 PreserveTempFiles = true,
                 UpgradeCode = new Guid(config.UpgradeCode),
             };
             project.Properties.Add(new Property("REINSTALLMODE", "dmus"));
-            project.MajorUpgrade = new MajorUpgrade() { AllowDowngrades = true };
-            //project.MajorUpgradeStrategy = new MajorUpgradeStrategy() {
-            //	UpgradeVersions = new VersionRange() {
-            //		IncludeMinimum = true,
-            //		IncludeMaximum = false,
-            //		Minimum = "0.0.0.1",
-            //		Maximum = "99.0.0.0"
-            //	} };
+            project.MajorUpgrade = new MajorUpgrade() { AllowDowngrades = true, Schedule = UpgradeSchedule.afterInstallInitialize };
+            project.MajorUpgradeStrategy = new MajorUpgradeStrategy()
+            {
+                UpgradeVersions = new VersionRange()
+                {
+                    IncludeMinimum = true,
+                    IncludeMaximum = false,
+                    Minimum = "0.0.0.1",
+                    Maximum = "99.0.0.0"
+                },
+                RemoveExistingProductAfter = Step.InstallInitialize
+            };
             Compiler.BuildMsi(project);
         }
     }

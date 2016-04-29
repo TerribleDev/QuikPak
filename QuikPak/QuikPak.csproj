@@ -81,9 +81,6 @@
     <None Include="App.config" />
     <None Include="Config.json" />
     <None Include="packages.config" />
-    <None Include="readme.md">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\WixSharp.1.0.35.3\build\WixSharp.targets" Condition="Exists('..\packages\WixSharp.1.0.35.3\build\WixSharp.targets')" />
