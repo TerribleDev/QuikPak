@@ -56,7 +56,7 @@ namespace QuikPak
                         Name = config.Name + "_Web_VDIR",
                         WebSite = new WebSite(config.Name)
                         {
-                            InstallWebSite = true,
+                            InstallWebSite = false,
                             Description = config.Name,
                             Addresses = addresses.ToArray(),
                         },
