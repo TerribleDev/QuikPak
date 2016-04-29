@@ -60,7 +60,15 @@ namespace QuikPak
                             Description = config.Name,
                             Addresses = addresses.ToArray(),
                         },
-                        WebAppPool = new WebAppPool(config.Name)
+                        WebAppPool = new WebAppPool(config.Name) {
+                           Attributes = new Dictionary<string, string>() {
+                               ["Identity"] = config.Identity,
+                               ["RecycleMinutes"] = config.RecycleMinutes.ToString(),
+                               ["IdleTimeout"] = config.IdleTimeout.ToString(),
+                               ["ManagedPipelineMode"] = config.ManagedPipelineMode,
+                               ["ManagedRuntimeVersion"] = config.ManagedRuntimeVersion
+                           }
+                        }
                     })
                 )
             },
