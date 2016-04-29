@@ -17,7 +17,7 @@ namespace QuikPak
         public string Identity { get; set; } = "localSystem";
         public int RecycleMinutes { get; set; } = 0;
         public int IdleTimeout { get; set; } = 0;
-        public string ManagedPipelineMode { get; set; } = "Intergrated";
+        public string ManagedPipelineMode { get; set; } = "Integrated";
         public string ManagedRuntimeVersion { get; set; } = "v4.0";
     }
 
