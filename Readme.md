@@ -16,7 +16,7 @@ Create a json config file that looks something like this
 {
     "UpgradeCode": "317e4313-2314-46e9-ae7e-6cdfee60c05d",
     "Name": "MyWebsite",
-    "Version": "1.0.0.0",
+    "Version": "1.0.0",
     "Endpoints": [
         {
             "port": 80,
