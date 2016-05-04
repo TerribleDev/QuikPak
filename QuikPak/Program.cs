@@ -2,9 +2,6 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WixSharp;
 
 namespace QuikPak
@@ -49,6 +46,7 @@ namespace QuikPak
                 Dirs = new[]
                 {
                 new Dir(new Id("IISMain"), config.Name + "_" +config.Version.ToString() +"_Web",
+
                 new Files(System.IO.Path.Combine(options.Path, "**")),
                 new File(options.Config,
                     new IISVirtualDir
@@ -58,10 +56,10 @@ namespace QuikPak
                         {
                             InstallWebSite = false,
                             Description = config.Name,
-                            Addresses = addresses.ToArray(),
+                            Addresses = addresses.ToArray()
                         },
                         WebAppPool = new WebAppPool(config.Name) {
-                           Attributes = new Dictionary<string, string>() {
+                            Attributes = new Dictionary<string, string>() {
                                ["Identity"] = config.Identity,
                                ["RecycleMinutes"] = config.RecycleMinutes.ToString(),
                                ["IdleTimeout"] = config.IdleTimeout.ToString(),
