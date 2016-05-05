@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using WixSharp;
 
 namespace QuikPak
@@ -23,7 +24,7 @@ namespace QuikPak
             }
             var config = JsonConvert.DeserializeObject<Config>(System.IO.File.ReadAllText(options.Config));
             var addresses = new List<WebSite.WebAddress>();
-
+            Verifier.Verify(config);
             foreach(var Endpoint in config.Endpoints)
             {
                 var attr = new Attributes()
@@ -43,6 +44,16 @@ namespace QuikPak
 
             var project = new Project(config.Name)
             {
+                //Certificates = config.Certificates.Select(a => new WixSharp.Certificate(
+                //    System.IO.Path.GetFileNameWithoutExtension(a.CertificatePath),
+                //    StoreLocation.localMachine,
+                //    StoreName.personal,
+                //    a.CertificatePath
+                //    , false
+                //    )
+                //{
+                //    PFXPassword = a.PfxPassword,
+                //}).ToArray(),
                 Dirs = new[]
                 {
                 new Dir(new Id("IISMain"), config.Name + "_" +config.Version.ToString() +"_Web",
@@ -54,7 +65,7 @@ namespace QuikPak
                         Name = config.Name + "_Web_VDIR",
                         WebSite = new WebSite(config.Name)
                         {
-                            InstallWebSite = false,
+                            InstallWebSite = true,
                             Description = config.Name,
                             Addresses = addresses.ToArray()
                         },

@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="9235996e-778c-44bc-bce9-46c7de574693" Name="MyWebsite" Language="1033" Codepage="Windows-1252" Version="1.0.0" UpgradeCode="317e4313-2314-46e9-ae7e-6cdfee60c05d" Manufacturer="parne">
+    <Package InstallerVersion="200" Compressed="yes" SummaryCodepage="Windows-1252" Languages="1033" />
+    <Media Id="1" Cabinet="MyWebsite.cab" EmbedCab="yes" />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="IISMain" Name="MyWebsite_1.0.0_Web">
+
+        <Component Id="Component.config.json" Guid="9235996e-778c-44bc-bce9-46c777633833">
+          <File Id="config.json" Source="config.json" />
+
+          <WebVirtualDir Id="VirtDir" Alias="MyWebsite_Web_VDIR" Directory="IISMain" WebSite="WebSite" xmlns="http://schemas.microsoft.com/wix/IIsExtension">
+            <WebApplication Id="MyWebAppWebApplication" Name="MyWebApp" WebAppPool="MyWebsite_Web_VDIR_AppPool" />
+          </WebVirtualDir>
+
+          <WebSite Id="WebSite" Description="MyWebsite" Directory="IISMain" xmlns="http://schemas.microsoft.com/wix/IIsExtension">
+            <WebAddress Id="WebSite_Address1" IP="*" Port="80" Secure="no" Header="*" />
+          </WebSite>
+
+          <WebAppPool Id="MyWebsite_Web_VDIR_AppPool" Name="MyWebsite" Identity="localSystem" RecycleMinutes="0" IdleTimeout="0" ManagedPipelineMode="Integrated" ManagedRuntimeVersion="v4.0" xmlns="http://schemas.microsoft.com/wix/IIsExtension" />
+        </Component>
+
+        <Component Id="Component.App.config" Guid="9235996e-778c-44bc-bce9-46c71bb924b3">
+          <File Id="App.config" Source="QuikPak\App.config" />
+        </Component>
+
+        <Component Id="Component.Certificate.cs" Guid="9235996e-778c-44bc-bce9-46c77942d4cf">
+          <File Id="Certificate.cs" Source="QuikPak\Certificate.cs" />
+        </Component>
+
+        <Component Id="Component.Config.cs" Guid="9235996e-778c-44bc-bce9-46c73ab02b70">
+          <File Id="Config.cs" Source="QuikPak\Config.cs" />
+        </Component>
+
+        <Component Id="Component.Options.cs" Guid="9235996e-778c-44bc-bce9-46c7c940a51c">
+          <File Id="Options.cs" Source="QuikPak\Options.cs" />
+        </Component>
+
+        <Component Id="Component.packages.config" Guid="9235996e-778c-44bc-bce9-46c7f1b80e04">
+          <File Id="packages.config" Source="QuikPak\packages.config" />
+        </Component>
+
+        <Component Id="Component.Program.cs" Guid="9235996e-778c-44bc-bce9-46c7f313d6f1">
+          <File Id="Program.cs" Source="QuikPak\Program.cs" />
+        </Component>
+
+        <Component Id="Component.QuikPak.csproj" Guid="9235996e-778c-44bc-bce9-46c7d22590a2">
+          <File Id="QuikPak.csproj" Source="QuikPak\QuikPak.csproj" />
+        </Component>
+
+        <Component Id="Component.QuikPak.csproj.user" Guid="9235996e-778c-44bc-bce9-46c7595d30f3">
+          <File Id="QuikPak.csproj.user" Source="QuikPak\QuikPak.csproj.user" />
+        </Component>
+
+        <Component Id="Component.Verifier.cs" Guid="9235996e-778c-44bc-bce9-46c710b985b0">
+          <File Id="Verifier.cs" Source="QuikPak\Verifier.cs" />
+        </Component>
+
+        <Directory Id="IISMain.bin" Name="bin">
+          <Directory Id="IISMain.bin.Debug" Name="Debug">
+
+            <Component Id="Component.BootstrapperCore.dll" Guid="9235996e-778c-44bc-bce9-46c7b5b971ba">
+              <File Id="BootstrapperCore.dll" Source="QuikPak\bin\Debug\BootstrapperCore.dll" />
+            </Component>
+
+            <Component Id="Component.BootstrapperCore.xml" Guid="9235996e-778c-44bc-bce9-46c7e24d71b9">
+              <File Id="BootstrapperCore.xml" Source="QuikPak\bin\Debug\BootstrapperCore.xml" />
+            </Component>
+
+            <Component Id="Component.CommandLine.dll" Guid="9235996e-778c-44bc-bce9-46c7377c3936">
+              <File Id="CommandLine.dll" Source="QuikPak\bin\Debug\CommandLine.dll" />
+            </Component>
+
+            <Component Id="Component.CommandLine.xml" Guid="9235996e-778c-44bc-bce9-46c70dcb1d1a">
+              <File Id="CommandLine.xml" Source="QuikPak\bin\Debug\CommandLine.xml" />
+            </Component>
+
+            <Component Id="Component.Microsoft.Deployment.WindowsInstaller.dll" Guid="9235996e-778c-44bc-bce9-46c721c297be">
+              <File Id="Microsoft.Deployment.WindowsInstaller.dll" Source="QuikPak\bin\Debug\Microsoft.Deployment.WindowsInstaller.dll" />
+            </Component>
+
+            <Component Id="Component.Microsoft.Deployment.WindowsInstaller.xml" Guid="9235996e-778c-44bc-bce9-46c721c197ca">
+              <File Id="Microsoft.Deployment.WindowsInstaller.xml" Source="QuikPak\bin\Debug\Microsoft.Deployment.WindowsInstaller.xml" />
+            </Component>
+
+            <Component Id="Component.MyWebsite.msi" Guid="9235996e-778c-44bc-bce9-46c7ac734164">
+              <File Id="MyWebsite.msi" Source="QuikPak\bin\Debug\MyWebsite.msi" />
+            </Component>
+
+            <Component Id="Component.MyWebsite.wxs" Guid="9235996e-778c-44bc-bce9-46c727666990">
+              <File Id="MyWebsite.wxs" Source="QuikPak\bin\Debug\MyWebsite.wxs" />
+            </Component>
+
+            <Component Id="Component.Newtonsoft.Json.dll" Guid="9235996e-778c-44bc-bce9-46c75cb1b16e">
+              <File Id="Newtonsoft.Json.dll" Source="QuikPak\bin\Debug\Newtonsoft.Json.dll" />
+            </Component>
+
+            <Component Id="Component.Newtonsoft.Json.xml" Guid="9235996e-778c-44bc-bce9-46c75bea84da">
+              <File Id="Newtonsoft.Json.xml" Source="QuikPak\bin\Debug\Newtonsoft.Json.xml" />
+            </Component>
+
+            <Component Id="Component.QuikPak.exe" Guid="9235996e-778c-44bc-bce9-46c74d4762a6">
+              <File Id="QuikPak.exe" Source="QuikPak\bin\Debug\QuikPak.exe" />
+            </Component>
+
+            <Component Id="Component.QuikPak.exe.config" Guid="9235996e-778c-44bc-bce9-46c7b71282db">
+              <File Id="QuikPak.exe.config" Source="QuikPak\bin\Debug\QuikPak.exe.config" />
+            </Component>
+
+            <Component Id="Component.QuikPak.pdb" Guid="9235996e-778c-44bc-bce9-46c7fccdba24">
+              <File Id="QuikPak.pdb" Source="QuikPak\bin\Debug\QuikPak.pdb" />
+            </Component>
+
+            <Component Id="Component.QuikPak.vshost.exe" Guid="9235996e-778c-44bc-bce9-46c7ab6e313e">
+              <File Id="QuikPak.vshost.exe" Source="QuikPak\bin\Debug\QuikPak.vshost.exe" />
+            </Component>
+
+            <Component Id="Component.QuikPak.vshost.exe.config" Guid="9235996e-778c-44bc-bce9-46c796e060ac">
+              <File Id="QuikPak.vshost.exe.config" Source="QuikPak\bin\Debug\QuikPak.vshost.exe.config" />
+            </Component>
+
+            <Component Id="Component.WixSharp.dll" Guid="9235996e-778c-44bc-bce9-46c773ea5f1e">
+              <File Id="WixSharp.dll" Source="QuikPak\bin\Debug\WixSharp.dll" />
+            </Component>
+
+            <Component Id="Component.WixSharp.Msi.dll" Guid="9235996e-778c-44bc-bce9-46c77548d00e">
+              <File Id="WixSharp.Msi.dll" Source="QuikPak\bin\Debug\WixSharp.Msi.dll" />
+            </Component>
+
+            <Component Id="Component.WixSharp.Msi.xml" Guid="9235996e-778c-44bc-bce9-46c7fe04d00d">
+              <File Id="WixSharp.Msi.xml" Source="QuikPak\bin\Debug\WixSharp.Msi.xml" />
+            </Component>
+
+            <Component Id="Component.WixSharp.UI.dll" Guid="9235996e-778c-44bc-bce9-46c7e72deb66">
+              <File Id="WixSharp.UI.dll" Source="QuikPak\bin\Debug\WixSharp.UI.dll" />
+            </Component>
+
+            <Component Id="Component.WixSharp.UI.xml" Guid="9235996e-778c-44bc-bce9-46c7bcef7422">
+              <File Id="WixSharp.UI.xml" Source="QuikPak\bin\Debug\WixSharp.UI.xml" />
+            </Component>
+
+            <Component Id="Component.WixSharp.xml" Guid="9235996e-778c-44bc-bce9-46c7ea2e5f1f">
+              <File Id="WixSharp.xml" Source="QuikPak\bin\Debug\WixSharp.xml" />
+            </Component>
+
+          </Directory>
+
+          <Directory Id="IISMain.bin.Release" Name="Release">
+
+            <Component Id="Component.BootstrapperCore.dll.1" Guid="9235996e-778c-44bc-bce9-46c7df923861">
+              <File Id="BootstrapperCore.dll.1" Source="QuikPak\bin\Release\BootstrapperCore.dll" />
+            </Component>
+
+            <Component Id="Component.CommandLine.dll.1" Guid="9235996e-778c-44bc-bce9-46c7a9ec3933">
+              <File Id="CommandLine.dll.1" Source="QuikPak\bin\Release\CommandLine.dll" />
+            </Component>
+
+            <Component Id="Component.Microsoft.Deployment.WindowsInstaller.dll.1" Guid="9235996e-778c-44bc-bce9-46c7b1e858fb">
+              <File Id="Microsoft.Deployment.WindowsInstaller.dll.1" Source="QuikPak\bin\Release\Microsoft.Deployment.WindowsInstaller.dll" />
+            </Component>
+
+            <Component Id="Component.Newtonsoft.Json.dll.1" Guid="9235996e-778c-44bc-bce9-46c755344c41">
+              <File Id="Newtonsoft.Json.dll.1" Source="QuikPak\bin\Release\Newtonsoft.Json.dll" />
+            </Component>
+
+            <Component Id="Component.QuikPak.exe.1" Guid="9235996e-778c-44bc-bce9-46c7cf7b9365">
+              <File Id="QuikPak.exe.1" Source="QuikPak\bin\Release\QuikPak.exe" />
+            </Component>
+
+            <Component Id="Component.QuikPak.exe.config.1" Guid="9235996e-778c-44bc-bce9-46c7cc594870">
+              <File Id="QuikPak.exe.config.1" Source="QuikPak\bin\Release\QuikPak.exe.config" />
+            </Component>
+
+            <Component Id="Component.WixSharp.dll.1" Guid="9235996e-778c-44bc-bce9-46c79ea19373">
+              <File Id="WixSharp.dll.1" Source="QuikPak\bin\Release\WixSharp.dll" />
+            </Component>
+
+            <Component Id="Component.WixSharp.Msi.dll.1" Guid="9235996e-778c-44bc-bce9-46c754fc8f03">
+              <File Id="WixSharp.Msi.dll.1" Source="QuikPak\bin\Release\WixSharp.Msi.dll" />
+            </Component>
+
+            <Component Id="Component.WixSharp.UI.dll.1" Guid="9235996e-778c-44bc-bce9-46c7a71a22b8">
+              <File Id="WixSharp.UI.dll.1" Source="QuikPak\bin\Release\WixSharp.UI.dll" />
+            </Component>
+
+          </Directory>
+        </Directory>
+
+        <Directory Id="IISMain.choco" Name="choco">
+
+          <Component Id="Component.quikpak.nuspec" Guid="9235996e-778c-44bc-bce9-46c71decb1b2">
+            <File Id="quikpak.nuspec" Source="QuikPak\choco\quikpak.nuspec" />
+          </Component>
+
+          <Directory Id="IISMain.choco.tools" Name="tools">
+
+            <Component Id="Component.ReadMe.md" Guid="9235996e-778c-44bc-bce9-46c70ad8b8cf">
+              <File Id="ReadMe.md" Source="QuikPak\choco\tools\ReadMe.md" />
+            </Component>
+
+          </Directory>
+        </Directory>
+
+        <Directory Id="IISMain.obj" Name="obj">
+          <Directory Id="IISMain.obj.Debug" Name="Debug">
+
+            <Component Id="Component.DesignTimeResolveAssemblyReferences.cache" Guid="9235996e-778c-44bc-bce9-46c706b5f1c1">
+              <File Id="DesignTimeResolveAssemblyReferences.cache" Source="QuikPak\obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
+            </Component>
+
+            <Component Id="Component.DesignTimeResolveAssemblyReferencesInput.cache" Guid="9235996e-778c-44bc-bce9-46c73f19dc30">
+              <File Id="DesignTimeResolveAssemblyReferencesInput.cache" Source="QuikPak\obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+            </Component>
+
+            <Component Id="Component.QuikPak.csproj.FileListAbsolute.txt" Guid="9235996e-778c-44bc-bce9-46c7aeccee7c">
+              <File Id="QuikPak.csproj.FileListAbsolute.txt" Source="QuikPak\obj\Debug\QuikPak.csproj.FileListAbsolute.txt" />
+            </Component>
+
+            <Component Id="Component.QuikPak.csprojResolveAssemblyReference.cache" Guid="9235996e-778c-44bc-bce9-46c708d6fd6c">
+              <File Id="QuikPak.csprojResolveAssemblyReference.cache" Source="QuikPak\obj\Debug\QuikPak.csprojResolveAssemblyReference.cache" />
+            </Component>
+
+            <Component Id="Component.QuikPak.exe.2" Guid="9235996e-778c-44bc-bce9-46c771220800">
+              <File Id="QuikPak.exe.2" Source="QuikPak\obj\Debug\QuikPak.exe" />
+            </Component>
+
+            <Component Id="Component.QuikPak.pdb.1" Guid="9235996e-778c-44bc-bce9-46c7b48f7f2d">
+              <File Id="QuikPak.pdb.1" Source="QuikPak\obj\Debug\QuikPak.pdb" />
+            </Component>
+
+            <Component Id="Component.TemporaryGeneratedFile_036C0B5B_1481_4323_8D20_8F5ADCB23D92.cs" Guid="9235996e-778c-44bc-bce9-46c7e234e49a">
+              <File Id="TemporaryGeneratedFile_036C0B5B_1481_4323_8D20_8F5ADCB23D92.cs" Source="QuikPak\obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+            </Component>
+
+            <Component Id="Component.TemporaryGeneratedFile_5937a670_0e60_4077_877b_f7221da3dda1.cs" Guid="9235996e-778c-44bc-bce9-46c7a7917585">
+              <File Id="TemporaryGeneratedFile_5937a670_0e60_4077_877b_f7221da3dda1.cs" Source="QuikPak\obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+            </Component>
+
+            <Component Id="Component.TemporaryGeneratedFile_E7A71F73_0F8D_4B9B_B56E_8E70B10BC5D3.cs" Guid="9235996e-778c-44bc-bce9-46c7bbfd6f29">
+              <File Id="TemporaryGeneratedFile_E7A71F73_0F8D_4B9B_B56E_8E70B10BC5D3.cs" Source="QuikPak\obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+            </Component>
+
+            <Directory Id="IISMain.obj.Debug.TempPE" Name="TempPE">
+
+              <Component Id="TempPE.EmptyDirectory" Guid="9235996e-778c-44bc-bce9-46c777cc1be4" KeyPath="yes">
+                <CreateFolder />
+                <RemoveFolder Id="IISMain.obj.Debug.TempPE" On="uninstall" />
+              </Component>
+
+            </Directory>
+          </Directory>
+
+          <Directory Id="IISMain.obj.Release" Name="Release">
+
+            <Component Id="Component.QuikPak.csproj.FileListAbsolute.txt.1" Guid="9235996e-778c-44bc-bce9-46c7dec80c4b">
+              <File Id="QuikPak.csproj.FileListAbsolute.txt.1" Source="QuikPak\obj\Release\QuikPak.csproj.FileListAbsolute.txt" />
+            </Component>
+
+            <Component Id="Component.QuikPak.csprojResolveAssemblyReference.cache.1" Guid="9235996e-778c-44bc-bce9-46c72dfd6d10">
+              <File Id="QuikPak.csprojResolveAssemblyReference.cache.1" Source="QuikPak\obj\Release\QuikPak.csprojResolveAssemblyReference.cache" />
+            </Component>
+
+            <Component Id="Component.QuikPak.exe.3" Guid="9235996e-778c-44bc-bce9-46c714ca7d9b">
+              <File Id="QuikPak.exe.3" Source="QuikPak\obj\Release\QuikPak.exe" />
+            </Component>
+
+            <Component Id="Component.QuikPak.pdb.2" Guid="9235996e-778c-44bc-bce9-46c79c85ddfe">
+              <File Id="QuikPak.pdb.2" Source="QuikPak\obj\Release\QuikPak.pdb" />
+            </Component>
+
+          </Directory>
+
+          <Component Id="IISMain.obj" Guid="9235996e-778c-44bc-bce9-46c7f2046f87" KeyPath="yes">
+            <CreateFolder />
+            <RemoveFolder Id="IISMain.obj" On="uninstall" />
+          </Component>
+
+        </Directory>
+
+        <Directory Id="IISMain.Properties" Name="Properties">
+
+          <Component Id="Component.AssemblyInfo.cs" Guid="9235996e-778c-44bc-bce9-46c7bc472992">
+            <File Id="AssemblyInfo.cs" Source="QuikPak\Properties\AssemblyInfo.cs" />
+          </Component>
+
+        </Directory>
+      </Directory>
+
+      <Component Id="TARGETDIR" Guid="9235996e-778c-44bc-bce9-46c74127a606" KeyPath="yes">
+        <CreateFolder />
+        <RemoveFolder Id="TARGETDIR" On="uninstall" />
+      </Component>
+
+    </Directory>
+
+    <MajorUpgrade AllowDowngrades="yes" Schedule="afterInstallInitialize" />
+
+    <Upgrade Id="317e4313-2314-46e9-ae7e-6cdfee60c05d">
+      <UpgradeVersion Minimum="0.0.0.1" Maximum="99.0.0.0" IncludeMinimum="yes" IncludeMaximum="no" Property="UPGRADEFOUND" />
+    </Upgrade>
+
+    <Feature Id="Complete" Title="Complete" Absent="allow" Level="1">
+      <ComponentRef Id="Component.config.json" />
+      <ComponentRef Id="Component.App.config" />
+      <ComponentRef Id="Component.Certificate.cs" />
+      <ComponentRef Id="Component.Config.cs" />
+      <ComponentRef Id="Component.Options.cs" />
+      <ComponentRef Id="Component.packages.config" />
+      <ComponentRef Id="Component.Program.cs" />
+      <ComponentRef Id="Component.QuikPak.csproj" />
+      <ComponentRef Id="Component.QuikPak.csproj.user" />
+      <ComponentRef Id="Component.Verifier.cs" />
+      <ComponentRef Id="Component.BootstrapperCore.dll" />
+      <ComponentRef Id="Component.BootstrapperCore.xml" />
+      <ComponentRef Id="Component.CommandLine.dll" />
+      <ComponentRef Id="Component.CommandLine.xml" />
+      <ComponentRef Id="Component.Microsoft.Deployment.WindowsInstaller.dll" />
+      <ComponentRef Id="Component.Microsoft.Deployment.WindowsInstaller.xml" />
+      <ComponentRef Id="Component.MyWebsite.msi" />
+      <ComponentRef Id="Component.MyWebsite.wxs" />
+      <ComponentRef Id="Component.Newtonsoft.Json.dll" />
+      <ComponentRef Id="Component.Newtonsoft.Json.xml" />
+      <ComponentRef Id="Component.QuikPak.exe" />
+      <ComponentRef Id="Component.QuikPak.exe.config" />
+      <ComponentRef Id="Component.QuikPak.pdb" />
+      <ComponentRef Id="Component.QuikPak.vshost.exe" />
+      <ComponentRef Id="Component.QuikPak.vshost.exe.config" />
+      <ComponentRef Id="Component.WixSharp.dll" />
+      <ComponentRef Id="Component.WixSharp.Msi.dll" />
+      <ComponentRef Id="Component.WixSharp.Msi.xml" />
+      <ComponentRef Id="Component.WixSharp.UI.dll" />
+      <ComponentRef Id="Component.WixSharp.UI.xml" />
+      <ComponentRef Id="Component.WixSharp.xml" />
+      <ComponentRef Id="Component.BootstrapperCore.dll.1" />
+      <ComponentRef Id="Component.CommandLine.dll.1" />
+      <ComponentRef Id="Component.Microsoft.Deployment.WindowsInstaller.dll.1" />
+      <ComponentRef Id="Component.Newtonsoft.Json.dll.1" />
+      <ComponentRef Id="Component.QuikPak.exe.1" />
+      <ComponentRef Id="Component.QuikPak.exe.config.1" />
+      <ComponentRef Id="Component.WixSharp.dll.1" />
+      <ComponentRef Id="Component.WixSharp.Msi.dll.1" />
+      <ComponentRef Id="Component.WixSharp.UI.dll.1" />
+      <ComponentRef Id="Component.quikpak.nuspec" />
+      <ComponentRef Id="Component.ReadMe.md" />
+      <ComponentRef Id="Component.DesignTimeResolveAssemblyReferences.cache" />
+      <ComponentRef Id="Component.DesignTimeResolveAssemblyReferencesInput.cache" />
+      <ComponentRef Id="Component.QuikPak.csproj.FileListAbsolute.txt" />
+      <ComponentRef Id="Component.QuikPak.csprojResolveAssemblyReference.cache" />
+      <ComponentRef Id="Component.QuikPak.exe.2" />
+      <ComponentRef Id="Component.QuikPak.pdb.1" />
+      <ComponentRef Id="Component.TemporaryGeneratedFile_036C0B5B_1481_4323_8D20_8F5ADCB23D92.cs" />
+      <ComponentRef Id="Component.TemporaryGeneratedFile_5937a670_0e60_4077_877b_f7221da3dda1.cs" />
+      <ComponentRef Id="Component.TemporaryGeneratedFile_E7A71F73_0F8D_4B9B_B56E_8E70B10BC5D3.cs" />
+      <ComponentRef Id="TempPE.EmptyDirectory" />
+      <ComponentRef Id="Component.QuikPak.csproj.FileListAbsolute.txt.1" />
+      <ComponentRef Id="Component.QuikPak.csprojResolveAssemblyReference.cache.1" />
+      <ComponentRef Id="Component.QuikPak.exe.3" />
+      <ComponentRef Id="Component.QuikPak.pdb.2" />
+      <ComponentRef Id="Component.AssemblyInfo.cs" />
+      <ComponentRef Id="IISMain.obj" />
+      <ComponentRef Id="TARGETDIR" />
+    </Feature>
+
+  </Product>
+</Wix>
+

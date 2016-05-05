@@ -5,8 +5,9 @@
   "Endpoints": [
     {
       "port": 80,
-      "DnsName": "mywebsite.com",
+      "DnsName": "*",
       "Secure": false
     }
-  ]
+  ],
+  "Certificates": [{"CertificatePath": "C:\\projects\\QuikPak\\cert.pfx", "PfxPassword": "Andromeda1"}]
 }
