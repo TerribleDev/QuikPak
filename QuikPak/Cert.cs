@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace QuikPak
 {
-    public class Certificate : IEquatable<Certificate>
+    public class Cert : IEquatable<Cert>
     {
         public string CertificatePath { get; set; }
         public string PfxPassword { get; set; }
 
-        public bool Equals(Certificate other)
+        public bool Equals(Cert other)
         {
             return string.Equals(this.CertificatePath, other.CertificatePath);
         }

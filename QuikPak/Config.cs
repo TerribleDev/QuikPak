@@ -15,7 +15,7 @@ namespace QuikPak
         public int IdleTimeout { get; set; } = 0;
         public string ManagedPipelineMode { get; set; } = "Integrated";
         public string ManagedRuntimeVersion { get; set; } = "v4.0";
-        public ICollection<Certificate> Certificates { get; set; } = new HashSet<Certificate>();
+        public ICollection<Cert> Certificates { get; set; } = new HashSet<Cert>();
     }
 
     public class Endpoint

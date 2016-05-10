@@ -72,7 +72,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Certificate.cs" />
+    <Compile Include="Cert.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="Program.cs" />

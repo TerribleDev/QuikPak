@@ -38,22 +38,22 @@ namespace QuikPak
                 }
                 addresses.Add(new WebSite.WebAddress()
                 {
+                    //Port = Endpoint.Port,
+                    //Address = Endpoint.DnsName,
                     Attributes = attr
                 });
             }
 
-            var project = new Project(config.Name)
+            var items = new List<WixObject>();
+            foreach(var cert in config.Certificates)
             {
-                //Certificates = config.Certificates.Select(a => new WixSharp.Certificate(
-                //    System.IO.Path.GetFileNameWithoutExtension(a.CertificatePath),
-                //    StoreLocation.localMachine,
-                //    StoreName.personal,
-                //    a.CertificatePath
-                //    , false
-                //    )
-                //{
-                //    PFXPassword = a.PfxPassword,
-                //}).ToArray(),
+                var name = System.IO.Path.GetFileNameWithoutExtension(cert.CertificatePath);
+                items.Add(new Binary(new Id(name), cert.CertificatePath));
+                items.Add(new Certificate(name, StoreLocation.localMachine, StoreName.personal, cert.CertificatePath, authorityRequest: false));
+            }
+
+            var project = new Project(config.Name, items.ToArray())
+            {
                 Dirs = new[]
                 {
                 new Dir(new Id("IISMain"), config.Name + "_" +config.Version.ToString() +"_Web",
@@ -62,12 +62,16 @@ namespace QuikPak
                 new File(options.Config,
                     new IISVirtualDir
                     {
-                        Name = config.Name + "_Web_VDIR",
-                        WebSite = new WebSite(config.Name)
+                        Name = config.Name + "WebSite",
+                        AppName = "ImAnAppName",
+                        WebSite = new WebSite(new Id(config.Name + "WebSite"), config.Name + "WebSite")
                         {
                             InstallWebSite = true,
-                            Description = config.Name,
-                            Addresses = addresses.ToArray()
+                            Addresses = addresses.ToArray(),
+                             Attributes = new Dictionary<string, string>()
+                             {
+                                // ["awesome"] = "yo"
+                             }
                         },
                         WebAppPool = new WebAppPool(config.Name) {
                             Attributes = new Dictionary<string, string>() {
@@ -75,9 +79,9 @@ namespace QuikPak
                                ["RecycleMinutes"] = config.RecycleMinutes.ToString(),
                                ["IdleTimeout"] = config.IdleTimeout.ToString(),
                                ["ManagedPipelineMode"] = config.ManagedPipelineMode,
-                               ["ManagedRuntimeVersion"] = config.ManagedRuntimeVersion
+                               ["ManagedRuntimeVersion"] = config.ManagedRuntimeVersion,
                            }
-                        }
+                        },
                     })
                 )
             },
@@ -88,6 +92,7 @@ namespace QuikPak
                 PreserveTempFiles = true,
                 UpgradeCode = new Guid(config.UpgradeCode),
             };
+
             project.Properties.Add(new Property("REINSTALLMODE", "dmus"));
             project.MajorUpgrade = new MajorUpgrade() { AllowDowngrades = true, Schedule = UpgradeSchedule.afterInstallInitialize };
             project.MajorUpgradeStrategy = new MajorUpgradeStrategy()
@@ -101,6 +106,15 @@ namespace QuikPak
                 },
                 RemoveExistingProductAfter = Step.InstallInitialize
             };
+            project.WixSourceGenerated += doc =>
+             doc.FindAll("WebSite")
+                .ForEach(x => x.AddElement(new System.Xml.Linq.XElement("WebApplication"), attributes: new Dictionary<string, string>()
+                {
+                    ["Id"] = "webapppoolgen",
+                    ["Name"] = "weapppoolgen" + config.Name,
+                    ["WebAppPool"] = $"{config.Name}WebSite_AppPool"
+                }));
+
             Compiler.BuildMsi(project);
         }
     }
