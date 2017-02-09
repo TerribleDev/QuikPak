@@ -45,7 +45,7 @@ namespace QuikPak
             {
                 Dirs = new[]
                 {
-                new Dir(new Id("IISMain"), config.Name + "_" +config.Version.ToString() +"_Web",
+                new Dir(new Id("IISMain"), config.Name + "_" +config.Version +"_Web",
 
                 new Files(System.IO.Path.Combine(options.Path, "**")),
                 new File(options.Config,
@@ -77,6 +77,7 @@ namespace QuikPak
                 PreserveTempFiles = true,
                 UpgradeCode = new Guid(config.UpgradeCode),
             };
+            project.Certificates = new Certificate[] { new Certificate() { PFXPassword = "password", CertificatePath = @"c:\bin\a.pfx", Request = false, StoreName = StoreName.personal, StoreLocation = StoreLocation.localMachine, Name = "cert1" } };
             project.Properties.Add(new Property("REINSTALLMODE", "dmus"));
             project.MajorUpgrade = new MajorUpgrade() { AllowDowngrades = true, Schedule = UpgradeSchedule.afterInstallInitialize };
             project.MajorUpgradeStrategy = new MajorUpgradeStrategy()
@@ -90,7 +91,8 @@ namespace QuikPak
                 },
                 RemoveExistingProductAfter = Step.InstallInitialize
             };
-            Compiler.BuildMsi(project);
+            Compiler.BuildWxs(project);
+            //Compiler.BuildMsi(project);
         }
     }
 }
