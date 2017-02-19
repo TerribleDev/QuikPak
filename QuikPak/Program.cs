@@ -3,6 +3,9 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using WixSharp;
+using System.Linq;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace QuikPak
 {
@@ -69,15 +72,15 @@ namespace QuikPak
                         }
                     })
                 )
-            },
+            }, 
                 Version = new Version(config.Version) { },
                 GUID = string.IsNullOrWhiteSpace(config.Id) ? Guid.NewGuid() : new Guid(config.Id),
                 UI = WUI.WixUI_ProgressOnly,
                 OutFileName = config.Name,
                 PreserveTempFiles = true,
                 UpgradeCode = new Guid(config.UpgradeCode),
+                //Certificates = config.Certs.Select(a => new Certificate { PFXPassword = a.Password, CertificatePath = a.CertificatePath, Request = false, StoreName = StoreName.personal, StoreLocation = StoreLocation.localMachine, Name = a.Name}).ToArray()
             };
-            project.Certificates = new Certificate[] { new Certificate() { PFXPassword = "password", CertificatePath = @"c:\bin\a.pfx", Request = false, StoreName = StoreName.personal, StoreLocation = StoreLocation.localMachine, Name = "cert1" } };
             project.Properties.Add(new Property("REINSTALLMODE", "dmus"));
             project.MajorUpgrade = new MajorUpgrade() { AllowDowngrades = true, Schedule = UpgradeSchedule.afterInstallInitialize };
             project.MajorUpgradeStrategy = new MajorUpgradeStrategy()
@@ -91,8 +94,29 @@ namespace QuikPak
                 },
                 RemoveExistingProductAfter = Step.InstallInitialize
             };
-            Compiler.BuildWxs(project);
-            //Compiler.BuildMsi(project);
+            project.IncludeWixExtension(WixExtension.IIs);
+            Compiler.WixSourceGenerated += (document) =>
+            {
+                var res = document.Descendants().Where(a => a.Name.ToString().Contains("site"));
+                Console.Write("df");
+                // <iis:Certificate Id="cert" BinaryKey="certBinary" Name="IRCool.org" StoreLocation="localMachine" StoreName="personal" PFXPassword="mypasswordisawesome" Request="no" />
+                //var website = document.DescendantNodes();
+                //foreach(var cert in config.Certs)
+                //{
+                //    website.Parent.Add(new XElement("iis:Certificate",
+                //        new XAttribute("Id", cert.Name),
+                //        new XAttribute("Request", "no"),
+                //        new XAttribute("Name", cert.Name),
+                //        new XAttribute("PFXPassword", cert.Password),
+                //        new XAttribute("StoreLocation", "localMachine"),
+                //        new XAttribute("StoreName", "personal"),
+                //        new XAttribute("CertificatePath", cert.CertificatePath)
+                //        ));
+                //    website.Add(new XElement("iis:CertificateRef", new XAttribute("Id", cert.Name)));
+                //}
+
+            };
+            Compiler.BuildMsi(project);
         }
     }
 }

@@ -15,6 +15,8 @@ namespace QuikPak
         public int IdleTimeout { get; set; } = 0;
         public string ManagedPipelineMode { get; set; } = "Integrated";
         public string ManagedRuntimeVersion { get; set; } = "v4.0";
+
+        public IEnumerable<Cert> Certs { get; set; }
     }
 
     public class Endpoint
@@ -22,5 +24,13 @@ namespace QuikPak
         public int Port { get; set; }
         public string DnsName { get; set; }
         public bool Secure { get; set; } = false;
+    }
+
+    public class Cert
+    {
+        public string Name { get; set; }
+        public string CertificatePath { get; set; }
+
+        public string Password { get; set; }
     }
 }
