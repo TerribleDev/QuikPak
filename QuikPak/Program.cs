@@ -43,7 +43,6 @@ namespace QuikPak
                     Attributes = attr
                 });
             }
-
             var project = new Project(config.Name)
             {
                 Dirs = new[]
@@ -57,7 +56,7 @@ namespace QuikPak
                         Name = config.Name + "_Web_VDIR",
                         WebSite = new WebSite(config.Name)
                         {
-                            InstallWebSite = false,
+                            InstallWebSite = true,
                             Description = config.Name,
                             Addresses = addresses.ToArray()
                         },
@@ -79,7 +78,7 @@ namespace QuikPak
                 OutFileName = config.Name,
                 PreserveTempFiles = true,
                 UpgradeCode = new Guid(config.UpgradeCode),
-                //Certificates = config.Certs.Select(a => new Certificate { PFXPassword = a.Password, CertificatePath = a.CertificatePath, Request = false, StoreName = StoreName.personal, StoreLocation = StoreLocation.localMachine, Name = a.Name}).ToArray()
+                Certificates = config.Certs.Select(a => new Certificate { PFXPassword = a.Password, CertificatePath = a.CertificatePath, Request = false, StoreName = StoreName.personal, StoreLocation = StoreLocation.localMachine, Name = a.Name}).ToArray()
             };
             project.Properties.Add(new Property("REINSTALLMODE", "dmus"));
             project.MajorUpgrade = new MajorUpgrade() { AllowDowngrades = true, Schedule = UpgradeSchedule.afterInstallInitialize };
@@ -97,23 +96,19 @@ namespace QuikPak
             project.IncludeWixExtension(WixExtension.IIs);
             Compiler.WixSourceGenerated += (document) =>
             {
-                var res = document.Descendants().Where(a => a.Name.ToString().Contains("site"));
-                Console.Write("df");
+                document.Descendants().Where(a => a.Name.ToString().EndsWith("WebVirtualDir", true)).ToList().ForEach(a=>a.Remove());
+                var appPool = document.Descendants().Where(a => a.Name.ToString().EndsWith("WebAppPool", true));
+                var certs = document.Descendants().Where(a => a.Name.ToString().EndsWith("Certificate", true));
+                var res = document.Descendants().First(a=>a.Name.ToString().EndsWith("WebSite", true));
                 // <iis:Certificate Id="cert" BinaryKey="certBinary" Name="IRCool.org" StoreLocation="localMachine" StoreName="personal" PFXPassword="mypasswordisawesome" Request="no" />
                 //var website = document.DescendantNodes();
-                //foreach(var cert in config.Certs)
-                //{
-                //    website.Parent.Add(new XElement("iis:Certificate",
-                //        new XAttribute("Id", cert.Name),
-                //        new XAttribute("Request", "no"),
-                //        new XAttribute("Name", cert.Name),
-                //        new XAttribute("PFXPassword", cert.Password),
-                //        new XAttribute("StoreLocation", "localMachine"),
-                //        new XAttribute("StoreName", "personal"),
-                //        new XAttribute("CertificatePath", cert.CertificatePath)
-                //        ));
-                //    website.Add(new XElement("iis:CertificateRef", new XAttribute("Id", cert.Name)));
-                //}
+                XNamespace name = "http://schemas.microsoft.com/wix/IIsExtension";
+                foreach(var cert in certs)
+                {
+                    
+                    res.Add(new XElement(name+"CertificateRef", new XAttribute("Id", cert.Attribute("Id").Value)));
+                }
+                res.Add(new XElement(name + "WebApplication", new XAttribute("Id", config.Name + "webapp"), new XAttribute("Name", config.Name + "webapp"), new XAttribute("WebAppPool", appPool.Attributes().First(a=>a.Name == "Id").Value)));
 
             };
             Compiler.BuildMsi(project);
