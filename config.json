@@ -1,12 +1,19 @@
 {
-  "UpgradeCode": "317e4313-2314-46e9-ae7e-6cdfee60c05d",
-  "Name": "MyWebsite",
-  "Version": "1.0.0",
-  "Endpoints": [
-    {
-      "port": 80,
-      "DnsName": "mywebsite.com",
-      "Secure": false
-    }
-  ]
+    "UpgradeCode": "317e4313-2314-46e9-ae7e-6cdfee60c05d",
+    "Name": "terribled",
+    "Version": "1.0.0.0",
+    "Endpoints": [
+        {
+            "port": 10000,
+            "DnsName": "terribledev.io",
+            "Secure": true
+        }
+    ],
+    "Certificates": [
+        {
+            "Name": "terribledev.io",
+            "Path": "c:/projects/quikpak/mycert.pfx",
+            "Password":  "awesome"
+        }
+    ]
 }

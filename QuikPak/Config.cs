@@ -16,7 +16,7 @@ namespace QuikPak
         public string ManagedPipelineMode { get; set; } = "Integrated";
         public string ManagedRuntimeVersion { get; set; } = "v4.0";
 
-        public IEnumerable<Cert> Certs { get; set; }
+        public IEnumerable<Cert> Certificates { get; set; }
     }
 
     public class Endpoint
@@ -29,7 +29,7 @@ namespace QuikPak
     public class Cert
     {
         public string Name { get; set; }
-        public string CertificatePath { get; set; }
+        public string Path { get; set; }
 
         public string Password { get; set; }
     }

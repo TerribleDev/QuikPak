@@ -30,8 +30,11 @@ Create a json config file that looks something like this
 
 ```
 
-then call QuikPak.exe -c path\to\your\config.json -x path\to\your\web\content
+then call QuikPak.exe -c path\to\your\config.jsondfsa -x path\to\your\web\content
 
-## TODO
+## Certificates
 
-Allow someone to include a certificate optionally for secure bindings
+You can also add certificates to your json bindings.
+
+
+....f.dfa.

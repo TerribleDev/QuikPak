@@ -78,7 +78,7 @@ namespace QuikPak
                 OutFileName = config.Name,
                 PreserveTempFiles = true,
                 UpgradeCode = new Guid(config.UpgradeCode),
-                Certificates = config.Certs.Select(a => new Certificate { PFXPassword = a.Password, CertificatePath = a.CertificatePath, Request = false, StoreName = StoreName.personal, StoreLocation = StoreLocation.localMachine, Name = a.Name}).ToArray()
+                Certificates = config.Certificates?.Select(a => new Certificate { PFXPassword = a.Password, CertificatePath = a.Path, Request = false, StoreName = StoreName.personal, StoreLocation = StoreLocation.localMachine, Name = a.Name}).ToArray() ?? new Certificate[0]
             };
             project.Properties.Add(new Property("REINSTALLMODE", "dmus"));
             project.MajorUpgrade = new MajorUpgrade() { AllowDowngrades = true, Schedule = UpgradeSchedule.afterInstallInitialize };
@@ -96,19 +96,49 @@ namespace QuikPak
             project.IncludeWixExtension(WixExtension.IIs);
             Compiler.WixSourceGenerated += (document) =>
             {
-                document.Descendants().Where(a => a.Name.ToString().EndsWith("WebVirtualDir", true)).ToList().ForEach(a=>a.Remove());
-                var appPool = document.Descendants().Where(a => a.Name.ToString().EndsWith("WebAppPool", true));
-                var certs = document.Descendants().Where(a => a.Name.ToString().EndsWith("Certificate", true));
-                var res = document.Descendants().First(a=>a.Name.ToString().EndsWith("WebSite", true));
-                // <iis:Certificate Id="cert" BinaryKey="certBinary" Name="IRCool.org" StoreLocation="localMachine" StoreName="personal" PFXPassword="mypasswordisawesome" Request="no" />
-                //var website = document.DescendantNodes();
+                string appPoolId = string.Empty;
+                var certs = new List<XElement>();
+                XElement website = null;
+                foreach(var node in document.Descendants().ToList())
+                {
+                    if(node == null || node.Name == null) continue;
+                    var nodeName = node.Name.ToString();
+                    if(nodeName.EndsWith("WebVirtualDir", true))
+                    {
+                        //remove virdir's as we should just use sites
+                        node.Remove();
+                    }
+                    if(nodeName.EndsWith("WebAppPool", true))
+                    {
+                        appPoolId = node.Attributes().First(a => a.Name == "Id").Value;
+                    }
+                    if(nodeName.EndsWith("Certificate", true))
+                    {
+                        certs.Add(node);
+                    }
+                    if(nodeName.EndsWith("WebSite", true))
+                    {
+                        website = node;
+                    }
+                }
+                if(string.IsNullOrWhiteSpace(appPoolId))
+                {
+                    Console.Error.WriteLine("App pool unable to be identified. A major problem has occured");
+                    Environment.Exit(1);
+                }
+                if(website == null)
+                {
+                    Console.Error.WriteLine("website unable to be identified. A major problem has occured");
+                    Environment.Exit(1);
+                }
+                
                 XNamespace name = "http://schemas.microsoft.com/wix/IIsExtension";
                 foreach(var cert in certs)
                 {
                     
-                    res.Add(new XElement(name+"CertificateRef", new XAttribute("Id", cert.Attribute("Id").Value)));
+                    website.Add(new XElement(name+"CertificateRef", new XAttribute("Id", cert.Attribute("Id").Value)));
                 }
-                res.Add(new XElement(name + "WebApplication", new XAttribute("Id", config.Name + "webapp"), new XAttribute("Name", config.Name + "webapp"), new XAttribute("WebAppPool", appPool.Attributes().First(a=>a.Name == "Id").Value)));
+                website.Add(new XElement(name + "WebApplication", new XAttribute("Id", config.Name + "webapp"), new XAttribute("Name", config.Name + "webapp"), new XAttribute("WebAppPool", appPoolId)));
 
             };
             Compiler.BuildMsi(project);
