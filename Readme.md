@@ -10,7 +10,7 @@ You can also install it from our public feed which might have newer versions fas
 
 ## How to use
 
-Create a json config file that looks something like this
+Create a json config file that looks something like this. The upgrade code must be a unique uuid, that will identify your msi.
 
 
 ```json
@@ -37,4 +37,24 @@ then call QuikPak.exe -c path\to\your\config.jsondfsa -x path\to\your\web\conten
 You can also add certificates to your json bindings.
 
 
-....f.dfa.
+```json
+
+{
+    "UpgradeCode": "317e4313-2314-46e9-ae7e-6cdfee60c05d",
+    "Name": "terribledev",
+    "Version": "1.0.0.1",
+    "Endpoints": [
+        {
+            "port": 10000,
+            "DnsName": "*",
+            "Secure": false
+        },
+        {
+            "port": 8000,
+            "DnsName": "localhost",
+            "Secure" :  false
+        }
+    ]
+}
+
+```
