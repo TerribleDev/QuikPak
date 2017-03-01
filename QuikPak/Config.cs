@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
+using WixSharp;
 
 namespace QuikPak
 {
@@ -32,5 +34,7 @@ namespace QuikPak
         public string Path { get; set; }
 
         public string Password { get; set; }
+        [JsonIgnore]
+        public Binary BinaryKey { get; set; }
     }
 }
