@@ -54,7 +54,13 @@ You can also add certificates to your json bindings.
             "DnsName": "localhost",
             "Secure" :  false
         }
-    ]
+    ],
+	"Certificates":[
+		{
+			"Name": "MyCert",
+			"Path": "awesome.pfx",
+			"Password": "password"
+		}
+	]
 }
-
 ```
