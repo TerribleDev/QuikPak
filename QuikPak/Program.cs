@@ -76,7 +76,7 @@ namespace QuikPak
                 GUID = string.IsNullOrWhiteSpace(config.Id) ? Guid.NewGuid() : new Guid(config.Id),
                 UI = WUI.WixUI_ProgressOnly,
                 OutFileName = config.Name,
-                PreserveTempFiles = false,
+                PreserveTempFiles = true,
                 Binaries = config.Certificates?.Select(a=> {
                     var bin = new Binary(a.Path);
                     a.BinaryKey = bin;
@@ -85,6 +85,10 @@ namespace QuikPak
                 UpgradeCode = new Guid(config.UpgradeCode),
                 Certificates = config.Certificates?.Select(a => new Certificate() { PFXPassword = a.Password, BinaryKey = a.BinaryKey.Id, StoreName = StoreName.personal, StoreLocation = StoreLocation.localMachine, Name = a.Name}).ToArray() ?? new Certificate[0]
             };
+            if(config.Enable64Bits)
+            {
+                project.Platform = Platform.x64;
+            }
             project.Properties.Add(new Property("REINSTALLMODE", "dmus"));
             project.MajorUpgrade = new MajorUpgrade() { AllowDowngrades = true, Schedule = UpgradeSchedule.afterInstallInitialize };
             project.MajorUpgradeStrategy = new MajorUpgradeStrategy()

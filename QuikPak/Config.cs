@@ -17,7 +17,7 @@ namespace QuikPak
         public int IdleTimeout { get; set; } = 0;
         public string ManagedPipelineMode { get; set; } = "Integrated";
         public string ManagedRuntimeVersion { get; set; } = "v4.0";
-
+        public bool Enable64Bits { get; set; } = false;
         public IEnumerable<Cert> Certificates { get; set; }
     }
 
