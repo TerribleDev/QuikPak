@@ -18,6 +18,7 @@ namespace QuikPak
         public string ManagedPipelineMode { get; set; } = "Integrated";
         public string ManagedRuntimeVersion { get; set; } = "v4.0";
         public bool Enable64Bits { get; set; } = false;
+        public bool PreserveTempFiles { get; set; } = false;
         public IEnumerable<Cert> Certificates { get; set; }
     }
 
