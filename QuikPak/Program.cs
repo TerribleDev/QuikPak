@@ -76,7 +76,7 @@ namespace QuikPak
                 GUID = string.IsNullOrWhiteSpace(config.Id) ? Guid.NewGuid() : new Guid(config.Id),
                 UI = WUI.WixUI_ProgressOnly,
                 OutFileName = config.Name,
-                PreserveTempFiles = true,
+                PreserveTempFiles = config.PreserveTempFiles,
                 Binaries = config.Certificates?.Select(a=> {
                     var bin = new Binary(a.Path);
                     a.BinaryKey = bin;
